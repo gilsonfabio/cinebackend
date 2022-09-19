@@ -77,4 +77,22 @@ module.exports = {
         return response.json(car);
     },
        
+    async searchCar(request, response) {
+        let id = request.params.idUsrCar;
+        let status = 'A';
+
+        const car = await connection('carcompras')
+            .where('carUser', id)
+            .where('carStatus', status)
+            .select('carId', 'carQtdtotal')
+            .first();
+          
+        if (!car) {
+            return response.status(400).json({ error: 'Não encontrou car. compras p/ este ID'});
+        } 
+
+        console.log(car);
+        
+        return response.json(car);
+    },    
 };
