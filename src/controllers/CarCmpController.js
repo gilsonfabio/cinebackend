@@ -95,4 +95,42 @@ module.exports = {
         
         return response.json(car);
     },    
+
+    async headerCar(request, response) {
+        let id = request.params.carId;
+        let status = 'A';
+
+        const car = await connection('carcompras')
+            .where('carId', id)
+            .where('carStatus', status)
+            .join('usrMovies', 'usrId', 'carcompras.carUser')
+            .select(['carcompras.*', 'usrMovies.usrNome'])
+            .first();
+          
+        if (!car) {
+            return response.status(400).json({ error: 'Não encontrou car. compras p/ este ID'});
+        } 
+
+        console.log(car);
+        
+        return response.json(car);
+    },
+
+    async itemsCar(request, response) {
+        let id = request.params.carId;
+        let status = 'A';
+
+        const item = await connection('carItems')
+            .where('iteCarId', id) 
+            .join('produtos', 'idProd', 'carItems.iteCarProId')
+            .select(['carItems.*', 'produtos.proDescricao', 'produtos.proReferencia', 'produtos.proAvatar'])
+          
+        if (!item) {
+            return response.status(400).json({ error: 'Não encontrou itens compras p/ este ID'});
+        } 
+
+        console.log(item);
+        
+        return response.json(item);
+    },
 };

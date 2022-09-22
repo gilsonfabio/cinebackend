@@ -86,4 +86,7 @@ routes.get('/detproduct/:proId', ProductsController.detProduct);
 routes.post('/newprocar', CarCmpController.carcompras);
 routes.get('/searchCar/:idUsrCar', CarCmpController.searchCar);
 
+routes.get('/headerCar/:carId', CarCmpController.headerCar);
+routes.get('/itemsCar/:carId', CarCmpController.itemsCar);
+
 module.exports = routes;
